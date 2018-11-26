@@ -21,9 +21,9 @@ jobs:
       - persist_to_workspace:
           root: build 
           paths:
-            - hk.exe 
-            - hk_osx 
-            - hk_unix 
+            - yup.exe 
+            - yup_osx 
+            - yup_unix 
   release:
     docker:
       - image: socialengine/github-release
