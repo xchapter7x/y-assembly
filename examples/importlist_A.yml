@@ -1,0 +1,5 @@
+mylist: &mylist
+- some
+- set
+- of 
+- data

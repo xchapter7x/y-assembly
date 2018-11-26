@@ -1,0 +1,5 @@
+- version: 1
+  base: basefile.yml
+  output: cool.yml
+  imports: 
+  - importlist_B.yml
