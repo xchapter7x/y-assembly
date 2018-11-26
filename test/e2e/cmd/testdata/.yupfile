@@ -1,0 +1,12 @@
+---
+- version: 1
+  base: "testdata/base/base.yml"
+  output: "testdata/outputs/out1.yml"
+  imports:
+  - "testdata/imports/import1.yml"
+
+- version: 1
+  base: "testdata/base/base.yml"
+  output: "testdata/outputs/out2.yml"
+  imports:
+  - "testdata/imports/import2.yml"
