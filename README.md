@@ -1,5 +1,5 @@
-# yup
-YAML Plus Imports: YuP
+# y-assembly
+YAML Plus Imports: y-assembly
 
 ### Description
 
@@ -29,7 +29,7 @@ mylist: &mylist
 - random
 - dataset
 
-# .yupfile
+# assembly.yml
 - version: 1
   base: basefile.yml
   output: cool.yml
@@ -39,7 +39,7 @@ mylist: &mylist
 
 
 ```bash
-$ yup build
+$ yaml build
 $ cat cool.yml
 
 ---

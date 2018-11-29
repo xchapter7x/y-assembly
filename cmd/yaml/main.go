@@ -6,17 +6,17 @@ import (
 	"os"
 	"path"
 
-	"github.com/xchapter7x/yup/pkg/yup"
+	"github.com/xchapter7x/y-assembly/pkg/y-assembly"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
-	Version   = "dev-build"
-	Buildtime = "sometime"
-	Platform  = "somecomputer"
-	yupConfig = kingpin.Flag("config", "config file path").Short('c').Default(".yupfile").String()
-	build     = kingpin.Command("build", "Build a yaml with your defined imports")
-	version   = kingpin.Command("version", "display version information")
+	Version         = "dev-build"
+	Buildtime       = "sometime"
+	Platform        = "somecomputer"
+	yassemblyConfig = kingpin.Flag("config", "config file path").Short('c').Default("assembly.yml").String()
+	build           = kingpin.Command("build", "Build a yaml with your defined imports")
+	version         = kingpin.Command("version", "display version information")
 )
 
 func main() {
@@ -26,11 +26,11 @@ func main() {
 		fmt.Printf("Built On: %s\n", Buildtime)
 		fmt.Printf("Platform: %s\n", Platform)
 	case build.FullCommand():
-		yupfile, err := os.Open(*yupConfig)
+		yassemblyfile, err := os.Open(*yassemblyConfig)
 		if err != nil {
 			panic(err)
 		}
-		configs, err := yup.ConfigParse(yupfile)
+		configs, err := yassembly.ConfigParse(yassemblyfile)
 		if err != nil {
 			panic(err)
 		}
@@ -60,7 +60,7 @@ func main() {
 				imports = append(imports, reader)
 			}
 
-			err = yup.Merge(baseFile, imports, output)
+			err = yassembly.Merge(baseFile, imports, output)
 			if err != nil {
 				panic(err)
 			}

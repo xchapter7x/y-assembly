@@ -1,4 +1,4 @@
-package yup_test
+package yassembly_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xchapter7x/yup/pkg/yup"
+	"github.com/xchapter7x/y-assembly/pkg/y-assembly"
 )
 
 func TestMerge(t *testing.T) {
@@ -22,7 +22,7 @@ func TestMerge(t *testing.T) {
 		controlOutput := fmt.Sprintf("%s\n%s\n%s", controlLineOne, controlLineTwo, controlLineThree)
 
 		outputFixture := new(strings.Builder)
-		err := yup.Merge(baseFixture, importsFixture, outputFixture)
+		err := yassembly.Merge(baseFixture, importsFixture, outputFixture)
 
 		if err != nil {
 			t.Errorf("did not expect error: %v", err)

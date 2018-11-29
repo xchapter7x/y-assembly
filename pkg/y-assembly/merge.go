@@ -1,4 +1,4 @@
-package yup
+package yassembly
 
 import (
 	"fmt"

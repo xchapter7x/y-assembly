@@ -14,9 +14,9 @@ import (
 	"github.com/onsi/gomega/gexec"
 )
 
-func TestYup(t *testing.T) {
+func TestYaml(t *testing.T) {
 	gomega.RegisterTestingT(t)
-	pathToYupCLI, err := gexec.Build("github.com/xchapter7x/yup/cmd/yup")
+	pathToYamlCLI, err := gexec.Build("github.com/xchapter7x/y-assembly/cmd/yaml")
 	defer gexec.CleanupBuildArtifacts()
 	defer func() {
 		os.RemoveAll("testdata/outputs")
@@ -25,11 +25,11 @@ func TestYup(t *testing.T) {
 		t.Fatalf("build failed: %v", err)
 	}
 
-	t.Run("yup build -c ./testdata/.yupfile", func(t *testing.T) {
-		command := exec.Command(pathToYupCLI,
+	t.Run("yaml build -c ./testdata/assembly.yml", func(t *testing.T) {
+		command := exec.Command(pathToYamlCLI,
 			"build",
 			"-c",
-			"./testdata/.yupfile")
+			"./testdata/assembly.yml")
 		session, err := gexec.Start(command, os.Stdout, os.Stderr)
 		if err != nil {
 			t.Fatalf("failed running command: %v", err)

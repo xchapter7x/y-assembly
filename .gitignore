@@ -1,2 +1,4 @@
 vendor
 cmd/yup/yup
+.DS_Store
+cmd/yaml/yaml

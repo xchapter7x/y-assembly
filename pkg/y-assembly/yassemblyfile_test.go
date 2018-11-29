@@ -1,4 +1,4 @@
-package yup_test
+package yassembly_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/xchapter7x/yup/pkg/yup"
+	"github.com/xchapter7x/y-assembly/pkg/y-assembly"
 )
 
 func TestConfigParse(t *testing.T) {
@@ -26,17 +26,17 @@ func TestConfigParse(t *testing.T) {
   - "` + controlPathBase + `/local/file"
   - "` + controlPathBase + `/other/local/file"`)
 
-	invalidYupfile := strings.NewReader(`!*#) ../:idddkgh`)
-	noImportsYupfile := strings.NewReader(`version: 1`)
-	emptyYupfile := strings.NewReader(``)
+	invalidYassemblyfile := strings.NewReader(`!*#) ../:idddkgh`)
+	noImportsYassemblyfile := strings.NewReader(`version: 1`)
+	emptyYassemblyfile := strings.NewReader(``)
 
-	noOutputYupfile := strings.NewReader(`---
+	noOutputYassemblyfile := strings.NewReader(`---
 - version: 1
   output: "somenewfile.yml"
   imports:
   - "` + controlPathBase + `/local/file"`)
 
-	noBaseYupfile := strings.NewReader(`---
+	noBaseYassemblyfile := strings.NewReader(`---
 - version: 1
   output: "somenewfile.yml"
   imports:
@@ -51,7 +51,7 @@ func TestConfigParse(t *testing.T) {
 			{"defined multiple local import", multipleImports},
 		} {
 			t.Run(table.testName, func(t *testing.T) {
-				configs, err := yup.ConfigParse(table.fileReader)
+				configs, err := yassembly.ConfigParse(table.fileReader)
 				if len(configs) == 0 {
 					t.Error("Expected to have configs")
 				}
@@ -80,14 +80,14 @@ func TestConfigParse(t *testing.T) {
 			testName   string
 			fileReader io.Reader
 		}{
-			{"invalid yupfile", invalidYupfile},
-			{"no imports", noImportsYupfile},
-			{"no output yaml", noOutputYupfile},
-			{"no base yaml", noBaseYupfile},
-			{"empty yupfile", emptyYupfile},
+			{"invalid y-assembly file", invalidYassemblyfile},
+			{"no imports", noImportsYassemblyfile},
+			{"no output yaml", noOutputYassemblyfile},
+			{"no base yaml", noBaseYassemblyfile},
+			{"empty y-assembly file", emptyYassemblyfile},
 		} {
 			t.Run(table.testName, func(t *testing.T) {
-				configs, err := yup.ConfigParse(table.fileReader)
+				configs, err := yassembly.ConfigParse(table.fileReader)
 				fmt.Println(err)
 				if configs != nil {
 					t.Errorf("Expected to have empty config: %v", configs)
