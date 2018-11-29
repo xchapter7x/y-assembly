@@ -11,6 +11,15 @@ import (
 
 func TestConfigParse(t *testing.T) {
 	controlPathBase := "testpath"
+	singlePatch := strings.NewReader(`---
+- version: 1
+  base: "somefile.yml"
+  output: "somenewfile.yml"
+  imports:
+  - "` + controlPathBase + `/local/file"
+  patches:
+  - "` + controlPathBase + `/local/patch"`)
+
 	singleImport := strings.NewReader(`---
 - version: 1
   base: "somefile.yml"
@@ -44,11 +53,13 @@ func TestConfigParse(t *testing.T) {
 
 	t.Run("parse success", func(t *testing.T) {
 		for _, table := range []struct {
-			testName   string
-			fileReader io.Reader
+			testName     string
+			fileReader   io.Reader
+			checkPatches bool
 		}{
-			{"defined single local import", singleImport},
-			{"defined multiple local import", multipleImports},
+			{"defined single local import w/ patch", singlePatch, true},
+			{"defined single local import", singleImport, false},
+			{"defined multiple local import", multipleImports, false},
 		} {
 			t.Run(table.testName, func(t *testing.T) {
 				configs, err := yassembly.ConfigParse(table.fileReader)
@@ -59,6 +70,9 @@ func TestConfigParse(t *testing.T) {
 					for _, importPath := range config.Imports {
 						if !strings.HasPrefix(importPath, controlPathBase) {
 							t.Errorf("expected path prefix to be %s in path %s", controlPathBase, importPath)
+						}
+						if table.checkPatches && len(config.Patches) <= 0 {
+							t.Error("expected to have patches")
 						}
 					}
 				}

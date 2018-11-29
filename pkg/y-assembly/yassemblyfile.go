@@ -13,6 +13,7 @@ type Config struct {
 	Base    string
 	Output  string
 	Imports []string
+	Patches []string
 }
 
 func ConfigParse(f io.Reader) ([]Config, error) {
