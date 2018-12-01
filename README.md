@@ -53,3 +53,13 @@ mylist: &mylist
 - random
 - dataset
 ```
+
+### Assembly.yml fields and file behavior
+
+`version`: and integer value representing the compatibility of the assembly record 
+
+`base`: the base file, where all others are appended or modify (can be url or local file)
+
+`output`: where the output of the assembly operation will go (must be local)
+
+`imports`: an array of urls or local file paths, which will be appended to the base to create the output 
