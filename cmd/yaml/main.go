@@ -27,6 +27,7 @@ func main() {
 		fmt.Printf("Platform: %s\n", Platform)
 	case build.FullCommand():
 		yassemblyfile, err := os.Open(*yassemblyConfig)
+		defer yassemblyfile.Close()
 		if err != nil {
 			panic(err)
 		}
@@ -41,11 +42,13 @@ func main() {
 			}
 
 			output, err := os.Create(config.Output)
+			defer output.Close()
 			if err != nil {
 				panic(err)
 			}
 
 			baseFile, err := os.Open(config.Base)
+			defer baseFile.Close()
 			if err != nil {
 				panic(err)
 			}
@@ -53,11 +56,12 @@ func main() {
 			imports := make([]io.Reader, 0)
 
 			for _, importPath := range config.Imports {
-				reader, err := os.Open(importPath)
+				importFile, err := os.Open(importPath)
+				defer importFile.Close()
 				if err != nil {
 					panic(err)
 				}
-				imports = append(imports, reader)
+				imports = append(imports, importFile)
 			}
 
 			err = yassembly.Merge(baseFile, imports, output)
