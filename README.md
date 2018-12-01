@@ -9,7 +9,7 @@ one can inject different implementations via different imports.
 
 ### Use case
 
-anywhere you are wrangling yaml (Kubernetes, BOSH, Concourse) this can help. It is generic, specifically build to provide enough flexibility to be used with any tool that likes yaml.
+anywhere you are wrangling yaml (Kubernetes, BOSH, Concourse) this can help. It is generic, specifically built to provide enough flexibility to be used with any tool that likes yaml.
 
 ### Example
 ```yaml
