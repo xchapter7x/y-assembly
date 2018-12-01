@@ -3,7 +3,7 @@
   base: "testdata/base/base.yml"
   output: "testdata/outputs/out1.yml"
   imports:
-  - "testdata/imports/import1.yml"
+  - "https://raw.githubusercontent.com/xchapter7x/y-assembly/master/test/e2e/cmd/testdata/imports/import1.yml"
 
 - version: 1
   base: "testdata/base/base.yml"

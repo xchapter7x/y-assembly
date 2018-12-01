@@ -3,8 +3,10 @@ package main
 import (
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"path"
+	"regexp"
 
 	"github.com/xchapter7x/y-assembly/pkg/y-assembly"
 	"gopkg.in/alecthomas/kingpin.v2"
@@ -47,7 +49,7 @@ func main() {
 				panic(err)
 			}
 
-			baseFile, err := os.Open(config.Base)
+			baseFile, err := open(config.Base)
 			defer baseFile.Close()
 			if err != nil {
 				panic(err)
@@ -56,7 +58,7 @@ func main() {
 			imports := make([]io.Reader, 0)
 
 			for _, importPath := range config.Imports {
-				importFile, err := os.Open(importPath)
+				importFile, err := open(importPath)
 				defer importFile.Close()
 				if err != nil {
 					panic(err)
@@ -70,4 +72,26 @@ func main() {
 			}
 		}
 	}
+}
+
+func open(path string) (io.ReadCloser, error) {
+	if isURL, _ := regexp.MatchString("http.*://", path); isURL {
+		return downloadFile(path)
+	}
+	return os.Open(path)
+}
+
+func downloadFile(url string) (io.ReadCloser, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		defer resp.Body.Close()
+		return nil, err
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		defer resp.Body.Close()
+		return nil, fmt.Errorf("bad status: %s", resp.Status)
+	}
+
+	return resp.Body, nil
 }
