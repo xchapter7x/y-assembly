@@ -75,7 +75,7 @@ func main() {
 }
 
 func open(path string) (io.ReadCloser, error) {
-	if isURL, _ := regexp.MatchString("http.*://", path); isURL {
+	if isURL, _ := regexp.MatchString("^http.*://", path); isURL {
 		return downloadFile(path)
 	}
 	return os.Open(path)
