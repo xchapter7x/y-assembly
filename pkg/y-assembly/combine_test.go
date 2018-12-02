@@ -9,7 +9,7 @@ import (
 	"github.com/xchapter7x/y-assembly/pkg/y-assembly"
 )
 
-func TestMerge(t *testing.T) {
+func TestCombine(t *testing.T) {
 	t.Run("valid base yaml and imports", func(t *testing.T) {
 		controlLineOne := `---`
 		controlLineTwo := `a:a`
@@ -22,7 +22,7 @@ func TestMerge(t *testing.T) {
 		controlOutput := fmt.Sprintf("%s\n%s\n%s", controlLineOne, controlLineTwo, controlLineThree)
 
 		outputFixture := new(strings.Builder)
-		err := yassembly.Merge(baseFixture, importsFixture, outputFixture)
+		err := yassembly.Combine(baseFixture, importsFixture, outputFixture)
 
 		if err != nil {
 			t.Errorf("did not expect error: %v", err)

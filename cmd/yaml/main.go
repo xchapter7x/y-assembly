@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"net/http"
@@ -43,11 +44,12 @@ func main() {
 				panic(err)
 			}
 
-			output, err := os.Create(config.Output)
-			defer output.Close()
+			outputFile, err := os.Create(config.Output)
+			defer outputFile.Close()
 			if err != nil {
 				panic(err)
 			}
+			outputBuffer := new(bytes.Buffer)
 
 			baseFile, err := open(config.Base)
 			defer baseFile.Close()
@@ -66,7 +68,12 @@ func main() {
 				imports = append(imports, importFile)
 			}
 
-			err = yassembly.Merge(baseFile, imports, output)
+			err = yassembly.Combine(baseFile, imports, outputBuffer)
+			if err != nil {
+				panic(err)
+			}
+
+			_, err = io.Copy(outputFile, outputBuffer)
 			if err != nil {
 				panic(err)
 			}

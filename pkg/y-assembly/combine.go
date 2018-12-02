@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func Merge(base io.Reader, imports []io.Reader, output io.Writer) error {
+func Combine(base io.Reader, imports []io.Reader, output io.Writer) error {
 	_, err := io.Copy(output, base)
 	if err != nil {
 		return fmt.Errorf("Copy of base errored with: %v", err)
