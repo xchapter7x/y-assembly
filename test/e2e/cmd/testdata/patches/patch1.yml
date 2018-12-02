@@ -1,0 +1,4 @@
+---
+- op: add
+  path: /which
+  value: had

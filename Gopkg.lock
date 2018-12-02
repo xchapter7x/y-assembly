@@ -21,6 +21,14 @@
   revision = "2efee857e7cfd4f3d0138cc3cbb1b4966962b93a"
 
 [[projects]]
+  digest = "1:1968f2f943a320bdbb0b90880ecec6b32cfa91b3b0ec8c216281822a20b3ba93"
+  name = "github.com/krishicks/yaml-patch"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "83cc9ac50becbbfafb86a89167f3bc5372e8e530"
+  version = "v0.0.10"
+
+[[projects]]
   digest = "1:b4764603c54d74435f246901248aefb2b9d430bb7b160afde1afc41d89d48f1a"
   name = "github.com/onsi/gomega"
   packages = [
@@ -101,6 +109,7 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/krishicks/yaml-patch",
     "github.com/onsi/gomega",
     "github.com/onsi/gomega/gexec",
     "gopkg.in/alecthomas/kingpin.v2",

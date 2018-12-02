@@ -1,8 +1,7 @@
 package main_test
 
 import (
-	"crypto/md5"
-	"fmt"
+	"bytes"
 	"io"
 	"os"
 	"os/exec"
@@ -41,18 +40,18 @@ func TestYaml(t *testing.T) {
 				string(session.Out.Contents()),
 				string(session.Err.Contents()))
 		}
-		hashControl := md5.New()
+		importsControlBuffer := new(bytes.Buffer)
 		baseFile, err := os.Open("testdata/base/base.yml")
 		defer baseFile.Close()
 		if err != nil {
 			t.Fatal(err)
 		}
 
-		if _, err := io.Copy(hashControl, baseFile); err != nil {
+		if _, err := io.Copy(importsControlBuffer, baseFile); err != nil {
 			t.Fatal(err)
 		}
 
-		if _, err := io.Copy(hashControl, strings.NewReader("\n")); err != nil {
+		if _, err := io.Copy(importsControlBuffer, strings.NewReader("\n")); err != nil {
 			t.Fatal(err)
 		}
 
@@ -62,26 +61,48 @@ func TestYaml(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if _, err := io.Copy(hashControl, importFile); err != nil {
+		if _, err := io.Copy(importsControlBuffer, importFile); err != nil {
 			t.Fatal(err)
 		}
+		patchesControlBuffer := bytes.NewBufferString(`lots:
+- of
+- stuff
+- with
+- even
+- more
+- imports
+somecool: thing
+which: had
+`)
 
-		hashGenerated := md5.New()
-		outputFile, err := os.Open("testdata/outputs/out1.yml")
-		defer outputFile.Close()
-		if err != nil {
-			t.Fatal(err)
-		}
-		if _, err := io.Copy(hashGenerated, outputFile); err != nil {
-			t.Fatal(err)
-		}
-		hashControlString := fmt.Sprintf("%x", hashControl.Sum(nil))
-		hashGeneratedString := fmt.Sprintf("%x", hashGenerated.Sum(nil))
-		if hashControlString != hashGeneratedString {
-			t.Errorf("generated file does not match the fixture hash: %s != %s",
-				hashControlString,
-				hashGeneratedString,
-			)
+		for _, table := range []struct {
+			name       string
+			control    *bytes.Buffer
+			outputPath string
+		}{
+			{"imports from remote source", importsControlBuffer, "testdata/outputs/out1.yml"},
+			{"imports from local source", importsControlBuffer, "testdata/outputs/out2.yml"},
+			{"imports with patch", patchesControlBuffer, "testdata/outputs/out3.yml"},
+		} {
+
+			t.Run(table.name, func(t *testing.T) {
+
+				testBuffer := new(bytes.Buffer)
+				outputFile, err := os.Open(table.outputPath)
+				defer outputFile.Close()
+				if err != nil {
+					t.Fatal(err)
+				}
+				if _, err := io.Copy(testBuffer, outputFile); err != nil {
+					t.Fatal(err)
+				}
+				if table.control.String() != testBuffer.String() {
+					t.Errorf("generated file does not match the control: \n'%s' \n!=\n \n'%s'",
+						table.control.String(),
+						testBuffer.String(),
+					)
+				}
+			})
 		}
 	})
 }

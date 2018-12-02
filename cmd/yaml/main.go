@@ -73,7 +73,24 @@ func main() {
 				panic(err)
 			}
 
-			_, err = io.Copy(outputFile, outputBuffer)
+			patches := make([]io.Reader, 0)
+
+			for _, patchPath := range config.Patches {
+				patchFile, err := open(patchPath)
+				defer patchFile.Close()
+				if err != nil {
+					panic(err)
+				}
+				patches = append(patches, patchFile)
+			}
+
+			patchedOutputBuffer := new(bytes.Buffer)
+			err = yassembly.Patch(outputBuffer, patches, patchedOutputBuffer)
+			if err != nil {
+				panic(err)
+			}
+
+			_, err = io.Copy(outputFile, patchedOutputBuffer)
 			if err != nil {
 				panic(err)
 			}
