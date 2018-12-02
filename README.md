@@ -66,4 +66,6 @@ mylist: &mylist
 
 `output`: where the output of the assembly operation will go (must be local)
 
-`imports`: an array of urls or local file paths, which will be appended to the base to create the output 
+`imports`: an array of urls or local file paths, which will be appended to the base to create the output. the array order is the order in which the files will be combined.
+
+`patches`: an array of urls or local file paths, which will be patched on top of the fully assembled set of base and imports. the array order is the order in which the patches will be applied. uses [yaml-patch op files](https://github.com/krishicks/yaml-patch) for full set of commands check the compatible [json patch docs](https://tools.ietf.org/html/rfc6902)
