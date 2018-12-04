@@ -34,11 +34,26 @@ mylist: &mylist
 - dataset
 
 # assembly.yml
+---
 - version: 1
-  base: basefile.yml
-  output: cool.yml
-  imports: 
-  - importlist_B.yml
+  base: "testdata/base/base.yml"
+  output: "testdata/outputs/cool.yml"
+  imports:
+  - "https://raw.githubusercontent.com/xchapter7x/y-assembly/master/test/e2e/cmd/testdata/imports/import1.yml"
+
+- version: 1
+  base: "testdata/base/base.yml"
+  output: "testdata/outputs/out2.yml"
+  imports:
+  - "testdata/imports/import1.yml"
+
+- version: 1
+  base: "testdata/base/base.yml"
+  output: "testdata/outputs/out3.yml"
+  imports:
+  - "https://raw.githubusercontent.com/xchapter7x/y-assembly/master/test/e2e/cmd/testdata/imports/import1.yml"
+  patches:
+  - "testdata/patches/patch1.yml"
 ```
 
 
