@@ -1,0 +1,6 @@
+---
+- version: 1
+  base: "testdata/base/simple_base.yml"
+  output: "testdata/outputs/outnil.yml"
+  imports:
+  - "testdata/imports/simple_import.yml"

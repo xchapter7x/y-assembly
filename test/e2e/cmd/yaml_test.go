@@ -105,4 +105,39 @@ which: had
 			})
 		}
 	})
+
+	t.Run("yaml build -c ./testdata/assembly_print.yml -p", func(t *testing.T) {
+		command := exec.Command(pathToYamlCLI,
+			"build",
+			"-c",
+			"./testdata/assembly_print.yml",
+			"-p",
+		)
+		session, err := gexec.Start(command, os.Stdout, os.Stderr)
+		if err != nil {
+			t.Fatalf("failed running command: %v", err)
+		}
+		session.Wait(120 * time.Second)
+		if session.ExitCode() != 0 {
+			t.Errorf("call failed: %v %v %v",
+				session.ExitCode(),
+				string(session.Out.Contents()),
+				string(session.Err.Contents()))
+		}
+		controlYaml := `
+---
+#  testdata/outputs/outnil.yml
+- base: hash
+
+- other: hash
+`
+		t.Run("should print the output yaml to stdout", func(t *testing.T) {
+			if controlYaml != string(session.Out.Contents()) {
+				t.Errorf("generated file does not match the control: \n'%s' \n!=\n \n'%s'",
+					controlYaml,
+					string(session.Out.Contents()),
+				)
+			}
+		})
+	})
 }

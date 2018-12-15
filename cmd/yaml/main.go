@@ -19,6 +19,7 @@ var (
 	Platform        = "somecomputer"
 	yassemblyConfig = kingpin.Flag("config", "config file path").Short('c').Default("assembly.yml").String()
 	build           = kingpin.Command("build", "Build a yaml with your defined imports")
+	printYaml       = build.Flag("print", "Print yaml to STDOUT").Short('p').Bool()
 	version         = kingpin.Command("version", "display version information")
 )
 
@@ -44,13 +45,7 @@ func main() {
 				panic(err)
 			}
 
-			outputFile, err := os.Create(config.Output)
-			defer outputFile.Close()
-			if err != nil {
-				panic(err)
-			}
 			outputBuffer := new(bytes.Buffer)
-
 			baseFile, err := open(config.Base)
 			defer baseFile.Close()
 			if err != nil {
@@ -58,7 +53,6 @@ func main() {
 			}
 
 			imports := make([]io.Reader, 0)
-
 			for _, importPath := range config.Imports {
 				importFile, err := open(importPath)
 				defer importFile.Close()
@@ -74,7 +68,6 @@ func main() {
 			}
 
 			patches := make([]io.Reader, 0)
-
 			for _, patchPath := range config.Patches {
 				patchFile, err := open(patchPath)
 				defer patchFile.Close()
@@ -90,12 +83,27 @@ func main() {
 				panic(err)
 			}
 
+			outputFile, err := getWriter(config.Output, *printYaml)
+			defer outputFile.Close()
+			if err != nil {
+				panic(err)
+			}
+
 			_, err = io.Copy(outputFile, patchedOutputBuffer)
 			if err != nil {
 				panic(err)
 			}
 		}
 	}
+}
+
+func getWriter(outputPath string, shouldPrint bool) (io.WriteCloser, error) {
+	if shouldPrint {
+		fmt.Fprintln(os.Stdout, "\n---")
+		fmt.Fprintln(os.Stdout, "# ", outputPath)
+		return os.Stdout, nil
+	}
+	return os.Create(outputPath)
 }
 
 func open(path string) (io.ReadCloser, error) {
