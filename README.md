@@ -10,6 +10,20 @@ One can combine files and apply patch files which are yaml patch compliant.
 Combining this functionality with yaml references and/or envsubst, makes for a really powerful and 
 flexible combination.
 
+### Install
+[Download Latest Releases Here](https://github.com/xchapter7x/y-assembly/releases/latest)
+
+```bash
+#Linux
+$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml_unix -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
+
+#OSX
+$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml_osx -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
+
+#Windows
+$ go to https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml.exe and download
+```
+
 ### Use case
 
 anywhere you are wrangling yaml (Kubernetes, BOSH, Concourse) this can help. It is generic, specifically built to provide enough flexibility to be used with any tool that likes yaml.
