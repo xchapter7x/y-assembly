@@ -75,6 +75,14 @@ somecool: thing
 which: had
 `)
 
+		expandedAliasesControl := bytes.NewBufferString(`age:
+  other: randomthing
+  some: thingelse
+mylist:
+  other: randomthing
+  some: thingelse
+name: somthing
+`)
 		for _, table := range []struct {
 			name       string
 			control    *bytes.Buffer
@@ -83,6 +91,7 @@ which: had
 			{"imports from remote source", importsControlBuffer, "testdata/outputs/out1.yml"},
 			{"imports from local source", importsControlBuffer, "testdata/outputs/out2.yml"},
 			{"imports with patch", patchesControlBuffer, "testdata/outputs/out3.yml"},
+			{"aliases replaced", expandedAliasesControl, "testdata/outputs/out4.yml"},
 		} {
 
 			t.Run(table.name, func(t *testing.T) {

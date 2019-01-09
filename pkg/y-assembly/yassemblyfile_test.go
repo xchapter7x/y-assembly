@@ -14,6 +14,7 @@ func TestConfigParse(t *testing.T) {
 	singlePatch := strings.NewReader(`---
 - version: 1
   base: "somefile.yml"
+  expand_aliases: true
   output: "somenewfile.yml"
   imports:
   - "` + controlPathBase + `/local/file"
@@ -22,6 +23,7 @@ func TestConfigParse(t *testing.T) {
 
 	singleImport := strings.NewReader(`---
 - version: 1
+  expand_aliases: true
   base: "somefile.yml"
   output: "somenewfile.yml"
   imports:
@@ -29,6 +31,7 @@ func TestConfigParse(t *testing.T) {
 
 	multipleImports := strings.NewReader(`---
 - version: 1
+  expand_aliases: true
   base: "somefile.yml"
   output: "somenewfile.yml"
   imports:
@@ -41,12 +44,14 @@ func TestConfigParse(t *testing.T) {
 
 	noOutputYassemblyfile := strings.NewReader(`---
 - version: 1
+  expand_aliases: true
   output: "somenewfile.yml"
   imports:
   - "` + controlPathBase + `/local/file"`)
 
 	noBaseYassemblyfile := strings.NewReader(`---
 - version: 1
+  expand_aliases: true
   output: "somenewfile.yml"
   imports:
   - "` + controlPathBase + `/local/file"`)
@@ -71,9 +76,14 @@ func TestConfigParse(t *testing.T) {
 						if !strings.HasPrefix(importPath, controlPathBase) {
 							t.Errorf("expected path prefix to be %s in path %s", controlPathBase, importPath)
 						}
-						if table.checkPatches && len(config.Patches) <= 0 {
-							t.Error("expected to have patches")
-						}
+					}
+
+					if table.checkPatches && len(config.Patches) <= 0 {
+						t.Error("expected to have patches")
+					}
+
+					if config.ExpandAliases != true {
+						t.Error("expected to expand aliases by default")
 					}
 				}
 

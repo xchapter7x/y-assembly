@@ -1,0 +1,6 @@
+mylist: &mylist
+  some: thingelse
+  other: randomthing 
+name: somthing
+age:
+  << : *mylist

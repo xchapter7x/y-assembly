@@ -18,3 +18,10 @@
   - "https://raw.githubusercontent.com/xchapter7x/y-assembly/master/test/e2e/cmd/testdata/imports/import1.yml"
   patches:
   - "testdata/patches/patch1.yml"
+
+- version: 1
+  expand_aliases: true
+  base: "testdata/base/nilbase.yml"
+  output: "testdata/outputs/out4.yml"
+  imports:
+  - "testdata/imports/aliases.yml"

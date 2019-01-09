@@ -9,11 +9,12 @@ import (
 )
 
 type Config struct {
-	Version int
-	Base    string
-	Output  string
-	Imports []string
-	Patches []string
+	Version       int
+	Base          string
+	Output        string
+	ExpandAliases bool `yaml:"expand_aliases"`
+	Imports       []string
+	Patches       []string
 }
 
 func ConfigParse(f io.Reader) ([]Config, error) {

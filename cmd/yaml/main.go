@@ -67,6 +67,16 @@ func main() {
 				panic(err)
 			}
 
+			if config.ExpandAliases == true {
+				fmt.Println("expanding aliases")
+				expandedBuffer := new(bytes.Buffer)
+				err = yassembly.ExpandAliases(outputBuffer, expandedBuffer)
+				if err != nil {
+					panic(err)
+				}
+				outputBuffer = expandedBuffer
+			}
+
 			patches := make([]io.Reader, 0)
 			for _, patchPath := range config.Patches {
 				patchFile, err := open(patchPath)
