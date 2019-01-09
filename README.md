@@ -1,6 +1,8 @@
 # y-assembly
 YAML Plus Imports: y-assembly
 
+[![CircleCI](https://circleci.com/gh/xchapter7x/y-assembly.svg?style=svg)](https://circleci.com/gh/xchapter7x/y-assembly)
+
 ### Description
 
 This tool is meant to provide some generic "imports" or merging capability.
