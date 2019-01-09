@@ -19,6 +19,8 @@ anywhere you are wrangling yaml (Kubernetes, BOSH, Concourse) this can help. It 
 
 `version`: and integer value representing the compatibility of the assembly record 
 
+`expand_aliases`: this will expand anchors and aliases in the output files (not dry but pure yaml)
+
 `base`: the base file, where all others are appended or modify (can be url or local file)
 
 `output`: where the output of the assembly operation will go (must be local)
