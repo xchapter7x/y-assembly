@@ -11,8 +11,8 @@ import (
 func ExpandAliases(input io.Reader, output io.Writer) error {
 	inputBuffer := new(bytes.Buffer)
 	inputBuffer.ReadFrom(input)
-	expandedYaml := make(map[string]interface{})
-	err := yaml.Unmarshal(inputBuffer.Bytes(), expandedYaml)
+	var expandedYaml interface{}
+	err := yaml.Unmarshal(inputBuffer.Bytes(), &expandedYaml)
 	if err != nil {
 		return fmt.Errorf("couldnt unmarshal yaml: %v", err)
 	}
