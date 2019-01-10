@@ -15,13 +15,13 @@ flexible combination.
 
 ```bash
 #Linux
-$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml_unix -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
+$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.2/yaml_unix -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
 
 #OSX
-$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml_osx -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
+$ curl -sL https://github.com/xchapter7x/y-assembly/releases/download/v0.4.2/yaml_osx -o yaml && chmod +x yaml && mv yaml /usr/local/bin/.
 
 #Windows
-$ go to https://github.com/xchapter7x/y-assembly/releases/download/v0.4.1/yaml.exe and download
+$ go to https://github.com/xchapter7x/y-assembly/releases/download/v0.4.2/yaml.exe and download
 ```
 
 ### Use case
