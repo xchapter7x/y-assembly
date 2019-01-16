@@ -2,7 +2,8 @@
 YAML Plus Imports: y-assembly
 
 [![CircleCI](https://circleci.com/gh/xchapter7x/y-assembly.svg?style=svg)](https://circleci.com/gh/xchapter7x/y-assembly)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/xchapter7x/y-assembly)](https://goreportcard.com/report/github.com/xchapter7x/y-assembly)
+[![GoDoc](https://godoc.org/github.com/xchapter7x/y-assembly?status.svg)](https://godoc.org/github.com/xchapter7x/y-assembly)
 ### Description
 
 This tool is meant to provide some generic "imports" or merging capability.
